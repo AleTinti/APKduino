@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dark">#242b38</color>
+    <color name="white">#ffffff</color>
+    <color name="arduino">#1D9499</color>
+</resources>
