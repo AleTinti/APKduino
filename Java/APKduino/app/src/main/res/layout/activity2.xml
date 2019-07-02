@@ -12,9 +12,9 @@
         android:layout_width="298dp"
         android:layout_height="166dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="164dp"
+        android:layout_marginBottom="100dp"
         android:gravity="center"
         android:text="Temperature:\nHumidity:"
         android:textColor="@color/white"
@@ -29,8 +29,7 @@
         android:id="@+id/maxText"
         android:layout_width="136dp"
         android:layout_height="19dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="MAX"
@@ -42,23 +41,20 @@
 
     <Button
         android:id="@+id/updateButton"
-        android:layout_width="253dp"
-        android:layout_height="37dp"
+        android:layout_width="247dp"
+        android:layout_height="63dp"
         android:layout_marginBottom="50dp"
         android:background="@color/arduino"
         android:text="Update"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/minBar" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <SeekBar
         android:id="@+id/minBar"
         android:layout_width="250dp"
         android:layout_height="25dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
         android:layout_marginBottom="50dp"
         android:layoutDirection="rtl"
         android:max="8"
@@ -72,9 +68,6 @@
         android:id="@+id/maxBar"
         android:layout_width="250dp"
         android:layout_height="25dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginBottom="40dp"
         android:layoutDirection="ltr"
         android:max="8"
         android:min="0"
@@ -87,8 +80,7 @@
         android:id="@+id/minText"
         android:layout_width="136dp"
         android:layout_height="19dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:text="MIN"
@@ -98,5 +90,4 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/maxBar" />
-
 </android.support.constraint.ConstraintLayout>
