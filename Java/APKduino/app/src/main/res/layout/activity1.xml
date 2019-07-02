@@ -9,10 +9,12 @@
 
     <ListView
         android:id="@+id/btDeviceList"
+        style="@android:style/Widget.DeviceDefault.Light.ExpandableListView"
         android:layout_width="339dp"
         android:layout_height="629dp"
         android:layout_marginTop="60dp"
         android:layout_marginBottom="16dp"
+        android:background="#00F0F0F0"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
