@@ -9,18 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class activity2 extends AppCompatActivity {
 
     private static final UUID btUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    ;
     TextView stateText, maxText, minText;
     SeekBar maxBar, minBar;
-    String t, h;
     int minTemp, maxTemp;
+    String h, t;
     BluetoothSocket btSocket = null;
     Button updateButton;
 
@@ -41,25 +40,33 @@ public class activity2 extends AppCompatActivity {
 
         final BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        //Bundle getbtDevice = getIntent().getExtras();
-        //String btDeviceName = getbtDevice.getString("btDevice");
-
-        try {
-            BluetoothDevice btDevice = btAdapter.getRemoteDevice(/*btDeviceName*/"AB:90:78:57:C2:5A" /*USING MAC FOR MORE SURE PAIR ONLY IN DEBUG*/);
-            btSocket = btDevice.createRfcommSocketToServiceRecord(btUUID);
-            btSocket.connect();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         new Thread(new Runnable() {
             @Override
             public void run() {
+                try {
+                    maxTemp = 24 + maxBar.getProgress();
+                    minTemp = 20 - minBar.getProgress();
+                    minText.setText("Min: " + minTemp);
+                    maxText.setText("Max: " + maxTemp);
+                    System.out.print(activity1.toSend);
+                    BluetoothDevice btDevice = btAdapter.getRemoteDevice(activity1.toSend);
+                    btSocket = btDevice.createRfcommSocketToServiceRecord(btUUID);
+                    btSocket.connect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        new Thread(new Runnable() {
+            @Override
+                        public void run() {
                 while (!isDestroyed()) {
-                    try{
+                    try {
                         byte[] buffer = new byte[1024];
                         int bytes = btSocket.getInputStream().read(buffer, 0, buffer.length);
-                        final String readMessage = new String(buffer, 0, bytes);
+                        String readMessage = new String(buffer, 0, bytes);
+                        System.out.println(readMessage);
                         t = readMessage.split("/")[0];
                         h = readMessage.split("/")[1];
                         runOnUiThread(new Runnable() {
@@ -75,24 +82,42 @@ public class activity2 extends AppCompatActivity {
             }
         }).start();
 
-        new Thread(new Runnable() {
+        minBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void run() {
-                while (true) {
-                    maxTemp = 24 + maxBar.getProgress();
-                    minTemp = 20 - minBar.getProgress();
-                    /*minText.setText("Min: " + minTemp);
-                    maxText.setText("Max: " + maxTemp);*/
-                }
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                minTemp = 20 - minBar.getProgress();
+                minText.setText("Min: " + minTemp);
             }
-        }).start();
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
+
+        maxBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                maxTemp = 24 + maxBar.getProgress();
+                maxText.setText("Max: " + maxTemp);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) { }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) { }
+        });
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    String minmaxTemp = (maxTemp + "/" + minTemp);
-                    btSocket.getOutputStream().write(minmaxTemp.getBytes());
+                    maxTemp = 24 + maxBar.getProgress();
+                    minTemp = 20 - minBar.getProgress();
+                    String msg = (maxTemp + "/" + minTemp);
+                    btSocket.getOutputStream().write(msg.getBytes());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
