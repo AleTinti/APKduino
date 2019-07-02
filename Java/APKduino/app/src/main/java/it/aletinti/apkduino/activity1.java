@@ -16,6 +16,8 @@ import java.util.Set;
 
 public class activity1 extends AppCompatActivity {
 
+    public static String toSend;
+
     BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
     ListView btDeviceList;
     String btDevice;
@@ -25,37 +27,31 @@ public class activity1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity1);
 
-        //activity2();
         Intent btEnable = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
         startActivityForResult(btEnable, 1);
 
         btDeviceList = findViewById(R.id.btDeviceList);
 
-        int i = 0;
-        while(i = 100){
-            String btMac[];
-            btMac[i] = (btAdapter.toString()).split(" /", 1);
-        }
-
-        final Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
+        Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
         List<String> ArrayList = new ArrayList();
-        for(BluetoothDevice btAdapter : pairedDevices) ArrayList.add(btAdapter.getName());
+        for(BluetoothDevice btAdapter : pairedDevices)
+            ArrayList.add(btAdapter.getName() + " (" + btAdapter.getAddress() + ")");
         final ArrayAdapter btDeviceArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, ArrayList);
-        System.out.println()
+
         btDeviceList.setAdapter(btDeviceArrayAdapter);
 
         btDeviceList.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 btDevice = (btDeviceArrayAdapter.getItem(position)).toString();
-                //activity2();
+                toSend = ((btDevice.split(" ")[1]).replace("(", "")).replace(")", "").trim();
+                activity2();
             }
         });
     }
 
     public void activity2(){
         Intent NextActivity = new Intent(this, activity2.class);
-        //NextActivity.putExtra("btDevice", btDevice);
         startActivity(NextActivity);
     }
 }
