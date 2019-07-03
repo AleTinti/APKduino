@@ -3,4 +3,5 @@
 *.cpp linguist-detectable=false
 *.ino linguist-detectable=false
 *.h linguist-detectable=false
+*.asm linguist-detectable=false
 
