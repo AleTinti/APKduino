@@ -1,7 +1,2 @@
 linguist-vendored
 *.java linguist-detectable=true
-*.xml linguist-detectable=false
-*.cpp linguist-detectable=false
-*.ino linguist-detectable=false
-*.h linguist-detectable=false
-*.asm linguist-detectable=false
