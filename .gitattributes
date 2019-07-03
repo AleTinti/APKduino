@@ -1,4 +1,6 @@
 static/* linguist-vendored
+*.java linguist-detectable=true
 *.cpp linguist-detectable=false
 *.h linguist-detectable=false
 *.ino linguist-detectable=false
+*.xml linguist-detectable=false
